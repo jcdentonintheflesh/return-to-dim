@@ -1,499 +1,199 @@
 /* ==UserStyle==
-@name         Return to Dim
-@namespace    github.com/jcdentonintheflesh/return-to-dim
-@version      1.0.0
-@description  Restores the classic Twitter "Dim" dark blue theme on X.com. Pure CSS, zero tracking, zero risk.
-@author       jcdentonintheflesh
-@license      MIT
-@homepageURL  https://github.com/jcdentonintheflesh/return-to-dim
-@supportURL   https://github.com/jcdentonintheflesh/return-to-dim/issues
-@preprocessor default
-==/UserStyle==
+@name           Return to Dim
+@namespace      github.com/jcdentonintheflesh/return-to-dim
+@version        1.2.0
+@description    Restores the classic Twitter Dim dark blue theme on X.com
+@author         jcdentonintheflesh
+@license        MIT
+@homepageURL    https://github.com/jcdentonintheflesh/return-to-dim
+@supportURL     https://github.com/jcdentonintheflesh/return-to-dim/issues
+==/UserStyle== */
+@-moz-document url-prefix("https://x.com/"), url-prefix("https://twitter.com/") {
 
-/*
- * RETURN TO DIM
- * Restores the original Twitter "Dim" navy blue theme that X removed in Feb 2026.
- *
- * Color Reference (from the original Dim theme):
- *   Primary Background:   #15202B  rgb(21, 32, 43)
- *   Secondary Background: #1E2732  rgb(30, 39, 50)
- *   Elevated Surface:     #253341  rgb(37, 51, 65)
- *   Border/Divider:       #38444D  rgb(56, 68, 77)
- *   Secondary Text:       #8B98A5  rgb(139, 152, 165)
- *   Primary Text:         #E7E9EA  rgb(231, 233, 234)
- *   Accent Blue:          #1D9BF0  rgb(29, 155, 240)
- *
- * Strategy: Three-layer override
- *   1. CSS custom properties on :root (catches var() usage)
- *   2. Inline style attribute selectors (catches React Native for Web)
- *   3. Known atomic CSS classes (catch-all fallback)
- *
- * All rules scoped under body.LightsOut so this only activates in dark mode.
- */
+/* CSS Custom Properties */
 
-@-moz-document url-prefix("https://x.com/"),
-               url-prefix("https://twitter.com/"),
-               url-prefix("https://pro.x.com/") {
+body.LightsOut {
+    --border-color: #38444d !important;
+    --color: #8b98a5;
+    --hover-bg-color: #1e2732; }
 
-  /* =========================================================================
-     LAYER 1: CSS Custom Properties
-     ========================================================================= */
+body {
+    --border-color: #38444d !important;
+    --color: #8b98a5;
+    --hover-bg-color: #1e2732; }
 
-  body.LightsOut {
-    --background: 215, 29%, 13% !important;
+:root[data-theme="dark"] {
+    --background: #15202b !important;
     --border: 206, 16%, 26% !important;
-    --color-gray-0: 206, 16%, 26% !important;
-    --color-gray-50: 206, 16%, 26% !important;
-    --color-gray-100: 206, 16%, 26% !important;
-    --color-gray-600: 209, 11%, 61% !important;
-    --color-gray-700: 209, 11%, 61% !important;
-  }
-
-  :root[data-theme="dark"] {
-    --background: 215, 29%, 13% !important;
-    --border: 206, 16%, 26% !important;
-    --color-gray-0: 206, 16%, 26% !important;
-    --color-gray-50: 206, 16%, 26% !important;
-    --color-gray-100: 206, 16%, 26% !important;
-    --color-gray-600: 209, 11%, 61% !important;
-    --color-gray-700: 209, 11%, 61% !important;
-  }
-
-  /* =========================================================================
-     LAYER 2: Inline Style Attribute Selectors
-     Targets colors set directly by React Native for Web via style=""
-     ========================================================================= */
-
-  /* --- Primary Background: rgb(0,0,0) → rgb(21,32,43) --- */
-  body.LightsOut,
-  body.LightsOut [style*="background-color: rgb(0, 0, 0)"],
-  body.LightsOut [style*="background-color:rgb(0, 0, 0)"],
-  body.LightsOut [style*="background-color: rgb(0,0,0)"],
-  body.LightsOut [style*="background-color:rgb(0,0,0)"],
-  body.LightsOut [style*="background: rgb(0, 0, 0)"],
-  body.LightsOut [style*="background: rgb(0,0,0)"],
-  body.LightsOut [style*="background-color: #000"],
-  body.LightsOut [style*="background-color:#000"] {
-    background-color: rgb(21, 32, 43) !important;
-  }
-
-  /* --- Secondary Background: rgb(22,24,28) → rgb(30,39,50) --- */
-  body.LightsOut [style*="background-color: rgb(22, 24, 28)"],
-  body.LightsOut [style*="background-color:rgb(22, 24, 28)"],
-  body.LightsOut [style*="background-color: rgb(22,24,28)"],
-  body.LightsOut [style*="background-color:rgb(22,24,28)"] {
-    background-color: rgb(30, 39, 50) !important;
-  }
-
-  /* --- Hover Background: rgb(30,31,34) → rgb(30,39,50) --- */
-  body.LightsOut [style*="background-color: rgb(30, 31, 34)"],
-  body.LightsOut [style*="background-color:rgb(30,31,34)"] {
-    background-color: rgb(30, 39, 50) !important;
-  }
-
-  /* --- Input/Search Background: rgb(32,35,39) → rgb(37,51,65) --- */
-  body.LightsOut [style*="background-color: rgb(32, 35, 39)"],
-  body.LightsOut [style*="background-color:rgb(32, 35, 39)"],
-  body.LightsOut [style*="background-color: rgb(32,35,39)"],
-  body.LightsOut [style*="background-color:rgb(32,35,39)"] {
-    background-color: rgb(37, 51, 65) !important;
-  }
-
-  /* --- Border colors: rgb(47,51,54) → rgb(56,68,77) --- */
-  body.LightsOut [style*="border-color: rgb(47, 51, 54)"],
-  body.LightsOut [style*="border-color:rgb(47, 51, 54)"],
-  body.LightsOut [style*="border-color: rgb(47,51,54)"],
-  body.LightsOut [style*="border-color:rgb(47,51,54)"] {
-    border-color: rgb(56, 68, 77) !important;
-  }
-
-  body.LightsOut [style*="border-bottom-color: rgb(47, 51, 54)"],
-  body.LightsOut [style*="border-bottom-color:rgb(47,51,54)"] {
-    border-bottom-color: rgb(56, 68, 77) !important;
-  }
-
-  body.LightsOut [style*="border-top-color: rgb(47, 51, 54)"],
-  body.LightsOut [style*="border-top-color:rgb(47,51,54)"] {
-    border-top-color: rgb(56, 68, 77) !important;
-  }
-
-  /* --- Secondary border: rgb(51,54,57) → rgb(56,68,77) --- */
-  body.LightsOut [style*="border-color: rgb(51, 54, 57)"],
-  body.LightsOut [style*="border-color:rgb(51,54,57)"] {
-    border-color: rgb(56, 68, 77) !important;
-  }
-
-  /* --- Icon backgrounds: rgb(62,65,68) → rgb(56,68,77) --- */
-  body.LightsOut [style*="background-color: rgb(62, 65, 68)"],
-  body.LightsOut [style*="background-color:rgb(62,65,68)"] {
-    background-color: rgb(56, 68, 77) !important;
-  }
-
-  /* --- Separator backgrounds used as borders --- */
-  body.LightsOut [style*="background-color: rgb(47, 51, 54)"],
-  body.LightsOut [style*="background-color:rgb(47, 51, 54)"],
-  body.LightsOut [style*="background-color: rgb(47,51,54)"],
-  body.LightsOut [style*="background-color:rgb(47,51,54)"] {
-    background-color: rgb(56, 68, 77) !important;
-  }
-
-  /* --- Secondary text: rgb(113,118,123) → rgb(139,152,165) --- */
-  body.LightsOut [style*="color: rgb(113, 118, 123)"],
-  body.LightsOut [style*="color:rgb(113, 118, 123)"],
-  body.LightsOut [style*="color: rgb(113,118,123)"],
-  body.LightsOut [style*="color:rgb(113,118,123)"] {
-    color: rgb(139, 152, 165) !important;
-  }
-
-  /* --- Gradient overlays (DMs, banners) --- */
-  body.LightsOut [style*="background: linear-gradient"] {
-    background: linear-gradient(
-      to bottom,
-      rgba(21, 32, 43, 0) 0%,
-      rgba(21, 32, 43, 0.7) 50%,
-      rgb(21, 32, 43) 100%
-    ) !important;
-  }
-
-  /* --- Modal/dialog backdrop --- */
-  body.LightsOut [style*="background-color: rgba(91, 112, 131"] {
-    background-color: rgba(21, 32, 43, 0.85) !important;
-  }
-
-  /* =========================================================================
-     LAYER 3: Atomic CSS Classes (React Native for Web generated)
-     These may change between X.com builds — kept as catch-all fallback
-     ========================================================================= */
-
-  /* --- Primary black backgrounds --- */
-  body.LightsOut .r-kemksi {
-    background-color: rgb(21, 32, 43) !important;
-  }
-
-  /* --- Secondary/card backgrounds --- */
-  body.LightsOut .r-g2wdr4,
-  body.LightsOut .r-1niwhzg {
-    background-color: rgb(30, 39, 50) !important;
-  }
-
-  /* --- Hover state backgrounds --- */
-  body.LightsOut .r-1hdo0pc {
-    background-color: rgb(30, 39, 50) !important;
-  }
-
-  /* --- Border colors --- */
-  body.LightsOut .r-1kqtdi0,
-  body.LightsOut .r-1roi411 {
-    border-color: rgb(56, 68, 77) !important;
-  }
-
-  body.LightsOut .r-1igl3o0 {
-    border-bottom-color: rgb(56, 68, 77) !important;
-  }
-
-  body.LightsOut .r-2sztyj {
-    border-top-color: rgb(56, 68, 77) !important;
-  }
-
-  /* --- Separator/divider backgrounds used as lines --- */
-  body.LightsOut .r-gu4em3,
-  body.LightsOut .r-1bnu78o {
-    background-color: rgb(56, 68, 77) !important;
-  }
-
-  /* --- Secondary text color --- */
-  body.LightsOut .r-1bwzh9t,
-  body.LightsOut .r-cqee49 {
-    color: rgb(139, 152, 165) !important;
-  }
-
-  /* --- Badge backgrounds --- */
-  body.LightsOut .r-z32n2g {
-    background-color: rgb(45, 54, 63) !important;
-  }
-
-  /* --- Utility classes (newer Grok/chat integration) --- */
-  body.LightsOut .bg-background {
-    background-color: rgb(21, 32, 43) !important;
-  }
-
-  body.LightsOut .bg-gray-0 {
-    background-color: rgb(30, 39, 50) !important;
-  }
-
-  /* =========================================================================
-     LAYER 4: Structural / data-testid Selectors (Most Stable)
-     ========================================================================= */
-
-  /* --- Body & HTML root --- */
-  body.LightsOut {
-    background-color: rgb(21, 32, 43) !important;
-    color-scheme: dark !important;
-  }
-
-  body.LightsOut #react-root {
-    background-color: rgb(21, 32, 43) !important;
-  }
-
-  /* --- Main timeline column --- */
-  body.LightsOut [data-testid="primaryColumn"] {
-    background-color: rgb(21, 32, 43) !important;
-    border-color: rgb(56, 68, 77) !important;
-  }
-
-  /* --- Right sidebar --- */
-  body.LightsOut [data-testid="sidebarColumn"] {
-    background-color: rgb(21, 32, 43) !important;
-  }
-
-  /* --- Sidebar search box --- */
-  body.LightsOut [data-testid="sidebarColumn"] [role="search"] input {
-    background-color: rgb(37, 51, 65) !important;
-  }
-
-  /* --- Top navigation bar --- */
-  body.LightsOut [data-testid="TopNavBar"] {
-    background-color: rgba(21, 32, 43, 0.85) !important;
-    border-color: rgb(56, 68, 77) !important;
-  }
-
-  /* --- DM drawer / panel --- */
-  body.LightsOut [data-testid="DMDrawer"] {
-    background-color: rgb(21, 32, 43) !important;
-    border-color: rgb(56, 68, 77) !important;
-  }
-
-  body.LightsOut [data-testid="DMDrawerHeader"] {
-    background-color: rgb(21, 32, 43) !important;
-    border-color: rgb(56, 68, 77) !important;
-  }
-
-  /* --- DM search --- */
-  body.LightsOut [data-testid="dm-search-bar"] {
-    background-color: rgb(37, 51, 65) !important;
-  }
-
-  /* --- Modals / Dialogs --- */
-  body.LightsOut [role="dialog"] {
-    background-color: rgb(21, 32, 43) !important;
-  }
-
-  body.LightsOut [role="dialog"] > div {
-    background-color: rgb(21, 32, 43) !important;
-  }
-
-  /* --- Dropdown menus --- */
-  body.LightsOut [role="menu"] {
-    background-color: rgb(21, 32, 43) !important;
-    border-color: rgb(56, 68, 77) !important;
-  }
-
-  /* --- Tooltips / Popovers --- */
-  body.LightsOut [role="tooltip"] {
-    background-color: rgb(30, 39, 50) !important;
-  }
-
-  /* --- Left sidebar navigation --- */
-  body.LightsOut [role="navigation"] {
-    background-color: rgb(21, 32, 43) !important;
-  }
-
-  body.LightsOut header[role="banner"] {
-    background-color: rgb(21, 32, 43) !important;
-  }
-
-  /* --- "What's happening" / Trends sidebar cards --- */
-  body.LightsOut [data-testid="sidebarColumn"] section {
-    background-color: rgb(22, 36, 48) !important;
-    border-color: rgb(56, 68, 77) !important;
-  }
-
-  body.LightsOut [data-testid="sidebarColumn"] aside {
-    background-color: rgb(22, 36, 48) !important;
-    border-color: rgb(56, 68, 77) !important;
-  }
-
-  /* --- Tab bars (Following / For You, etc.) --- */
-  body.LightsOut [role="tablist"] {
-    background-color: rgba(21, 32, 43, 0.85) !important;
-    border-color: rgb(56, 68, 77) !important;
-  }
-
-  /* Tab indicator (active tab underline stays Twitter blue) */
-  body.LightsOut [role="tab"][aria-selected="true"] > div > div {
-    background-color: rgb(29, 155, 240) !important;
-  }
-
-  /* --- Tweet hover state --- */
-  body.LightsOut [data-testid="cellInnerDiv"]:hover {
-    background-color: rgba(255, 255, 255, 0.03) !important;
-  }
-
-  /* --- Compose tweet area --- */
-  body.LightsOut .DraftEditor-root {
-    background-color: transparent !important;
-  }
-
-  body.LightsOut [data-testid="tweetTextarea_0"] {
-    background-color: transparent !important;
-  }
-
-  /* --- Scrollbar styling for the navy theme --- */
-  body.LightsOut ::-webkit-scrollbar {
-    width: 16px;
-  }
-
-  body.LightsOut ::-webkit-scrollbar-track {
-    background-color: rgb(21, 32, 43);
-  }
-
-  body.LightsOut ::-webkit-scrollbar-thumb {
-    background-color: rgb(56, 68, 77);
-    border: 4px solid rgb(21, 32, 43);
-    border-radius: 8px;
-  }
-
-  body.LightsOut ::-webkit-scrollbar-thumb:hover {
-    background-color: rgb(78, 93, 105);
-  }
-
-  /* =========================================================================
-     LAYER 5: Edge Cases & Polish
-     ========================================================================= */
-
-  /* --- Image/video dark overlays --- */
-  body.LightsOut [style*="background-color: rgba(0, 0, 0"] {
-    background-color: rgba(21, 32, 43, var(--tw-bg-opacity, 0.75)) !important;
-  }
-
-  /* --- Loading skeleton shimmer backgrounds --- */
-  body.LightsOut [style*="background-color: rgb(25, 25, 25)"],
-  body.LightsOut [style*="background-color:rgb(25,25,25)"] {
-    background-color: rgb(25, 36, 47) !important;
-  }
-
-  body.LightsOut [style*="background-color: rgb(38, 38, 38)"],
-  body.LightsOut [style*="background-color:rgb(38,38,38)"] {
-    background-color: rgb(37, 51, 65) !important;
-  }
-
-  /* --- Notifications dot/badge --- */
-  body.LightsOut [data-testid="AppTabBar_Notifications_Link"] [aria-label] {
-    color: white !important;
-  }
-
-  /* --- Profile page header (below banner) --- */
-  body.LightsOut [data-testid="UserProfileHeader_Items"] {
-    color: rgb(139, 152, 165) !important;
-  }
-
-  /* --- Sticky headers (top bar when scrolling) --- */
-  body.LightsOut [aria-live="polite"] {
-    background-color: rgba(21, 32, 43, 0.85) !important;
-  }
-
-  /* --- Analytics / Creator Dashboard cards --- */
-  body.LightsOut [data-testid="analyticsCard"],
-  body.LightsOut [data-testid="insightCard"] {
-    background-color: rgb(22, 36, 48) !important;
-    border-color: rgb(56, 68, 77) !important;
-  }
-
-  /* --- "Show more" / "Show this thread" buttons --- */
-  body.LightsOut [role="link"][tabindex="0"]:hover {
-    background-color: rgba(255, 255, 255, 0.03) !important;
-  }
-
-  /* --- Community notes background --- */
-  body.LightsOut [data-testid="birdwatch-pivot"] {
-    background-color: rgb(22, 36, 48) !important;
-    border-color: rgb(56, 68, 77) !important;
-  }
-
-  /* --- Spaces listener card --- */
-  body.LightsOut [data-testid="SpaceCard"] {
-    background-color: rgb(22, 36, 48) !important;
-    border-color: rgb(56, 68, 77) !important;
-  }
-
-  /* --- Poll option backgrounds --- */
-  body.LightsOut [data-testid="cardPoll"] {
-    background-color: rgb(30, 39, 50) !important;
-  }
-
-  /* --- Embedded media cards --- */
-  body.LightsOut [data-testid="card.wrapper"] {
-    background-color: rgb(21, 32, 43) !important;
-    border-color: rgb(56, 68, 77) !important;
-  }
-
-  /* --- Super Follows / Subscriptions gated content --- */
-  body.LightsOut [data-testid="superFollowsGatedTweet"] {
-    background-color: rgb(22, 36, 48) !important;
-    border-color: rgb(56, 68, 77) !important;
-  }
-
-  /* --- Grok chat panel --- */
-  body.LightsOut [data-testid="GrokDrawer"],
-  body.LightsOut [data-testid="GrokDrawer"] > div {
-    background-color: rgb(21, 32, 43) !important;
-    border-color: rgb(56, 68, 77) !important;
-  }
-
-  /* --- Lists sidebar cards --- */
-  body.LightsOut [data-testid="listCard"] {
-    background-color: rgb(22, 36, 48) !important;
-    border-color: rgb(56, 68, 77) !important;
-  }
-
-  /* --- Emoji picker --- */
-  body.LightsOut [data-testid="emojiPicker"] {
-    background-color: rgb(21, 32, 43) !important;
-    border-color: rgb(56, 68, 77) !important;
-  }
-
-  /* --- GIF picker --- */
-  body.LightsOut [data-testid="gifSearchBar"] {
-    background-color: rgb(37, 51, 65) !important;
-  }
-
-  /* --- Confirm / action sheets --- */
-  body.LightsOut [data-testid="confirmationSheetDialog"] {
-    background-color: rgb(21, 32, 43) !important;
-  }
-
-  /* --- Settings pages --- */
-  body.LightsOut [data-testid="settingsDetail"] {
-    background-color: rgb(21, 32, 43) !important;
-  }
-
-  /* --- Floating compose button (mobile web) --- */
-  body.LightsOut [data-testid="SideNav_NewTweet_Button"] {
-    background-color: rgb(29, 155, 240) !important;
-  }
-
-  /* --- Account switcher dropdown --- */
-  body.LightsOut [data-testid="AccountSwitcher"] {
-    background-color: rgb(21, 32, 43) !important;
-    border-color: rgb(56, 68, 77) !important;
-  }
-
-  /* =========================================================================
-     WILDCARD: Catch any remaining pure-black backgrounds
-     This is aggressive but ensures no black surfaces leak through.
-     Scoped tightly to the main app container.
-     ========================================================================= */
-
-  body.LightsOut #react-root > div > div {
-    background-color: rgb(21, 32, 43) !important;
-  }
-
-  /* --- Fix box-shadows that reference black --- */
-  body.LightsOut [style*="box-shadow: rgb(0, 0, 0)"] {
-    box-shadow: rgba(21, 32, 43, 0.75) 0px 0px 8px !important;
-  }
-
-  body.LightsOut [style*="box-shadow: rgba(0, 0, 0"] {
-    box-shadow: rgba(21, 32, 43, 0.75) 0px 0px 8px !important;
-  }
+    --color-gray-50: var(--border);
+    --color-gray-100: var(--border);
+    --color-gray-0: var(--border);
+    --color-gray-600: 209, 11%, 61%;
+    --color-gray-700: 209, 11%, 61%; }
+
+/* Secondary text */
+
+[style="color: rgb(113, 118, 123);"],
+[style="-webkit-line-clamp: 3; color: rgb(113, 118, 123);"],
+[style="-webkit-line-clamp: 2; color: rgb(113, 118, 123);"],
+.draftjs-styles_0 .public-DraftEditorPlaceholder-root {
+    color: #8b98a5 !important; }
+
+.r-1bwzh9t,
+.r-cqee49 {
+    color: #8b98a5 !important; }
+
+/* Backgrounds */
+
+.r-5zmot {
+    background-color: #15202b !important; }
+
+body.LightsOut, body, [aria-label="Loading…"] {
+    background-color: #15202b !important; }
+
+.r-kemksi {
+    background-color: #15202b !important; }
+
+[style="background-color: rgb(0, 0, 0);"] {
+    background-color: #15202b !important; }
+
+.bg-background {
+    background-color: #15202b !important; }
+
+.r-cqee49 {
+    color: #15202b !important; }
+
+#react-root,
+#react-root > div > div {
+    background-color: #15202b !important; }
+
+/* Hover / secondary surfaces */
+
+.r-g2wdr4 {
+    background-color: #1e2732; }
+
+[style="background-color: rgb(22, 24, 28);"] {
+    background-color: #1e2732 !important; }
+
+[style="background-color: rgb(30, 31, 34);"] {
+    background-color: #1e2732 !important; }
+
+[style="background-color: rgb(32, 35, 39);"] {
+    background-color: #253341 !important; }
+
+[data-state="closed"]:hover,
+[data-selected="true"] [data-state="closed"] {
+    background-color: #1e2732; }
+
+/* Borders */
+
+.r-kemksi {
+    border-color: #38444d !important; }
+
+.r-1igl3o0 {
+    border-bottom-color: #38444d !important; }
+
+.r-1kqtdi0 {
+    border-color: #38444d !important; }
+
+.r-gu4em3 {
+    background-color: #38444d !important; }
+
+[id="cpftInteractionLinks"] > .r-37j5jr {
+    border-color: #38444d !important; }
+
+.r-2sztyj {
+    border-color: #38444d !important; }
+
+.r-1roi411 {
+    border-color: #38444d !important; }
+
+.r-16cnnyw {
+    border-color: #38444d !important; }
+
+[style="border-color: rgb(47, 51, 54);"] {
+    border-color: #38444d !important; }
+
+[style="border-color: rgb(51, 54, 57);"] {
+    border-color: #38444d !important; }
+
+/* Separators */
+
+[style="background-color: rgb(47, 51, 54);"] {
+    background-color: #38444d !important; }
+
+/* Icons */
+
+[style="background-color: rgb(62, 65, 68);"] {
+    background-color: #38444d !important; }
+
+[style="background-color: rgb(51, 54, 57);"] {
+    background-color: #38444d !important; }
+
+/* Badge */
+
+.r-z32n2g {
+    background-color: #2d363f; }
+
+/* Reply separator */
+
+.r-1bnu78o {
+    background-color: #38444d !important; }
+
+/* Settings theme picker */
+
+[aria-label="Background options"][role="radiogroup"] > div:nth-last-child(1) {
+    background-color: #15202b !important; }
+
+[aria-label="Background options"][role="radiogroup"] > div:nth-last-child(1) [class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"] {
+    display: block;
+    width: 30px; }
+
+[aria-label="Background options"][role="radiogroup"] > div:nth-last-child(1) [class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"]:before {
+    content: 'Dim '; }
+
+/* Gradients (DMs, banners) */
+
+[style="background: linear-gradient(360deg, transparent 0%, hsl(var(--color-background)) 100%);"] {
+    background: linear-gradient(360deg, transparent 0%, hsl(212, 29%, 13%) 100%) !important; }
+
+/* DM search */
+
+[data-testid="dm-search-bar"] {
+    background-color: #253341 !important; }
+
+/* Grok utility classes */
+
+.bg-gray-0 {
+    background-color: #1e2732 !important; }
+
+/* Loading skeletons */
+
+[style="background-color: rgb(25, 25, 25);"] {
+    background-color: #1a2b3a !important; }
+
+[style="background-color: rgb(38, 38, 38);"] {
+    background-color: #253341 !important; }
+
+/* Modal backdrop */
+
+[style="background-color: rgba(91, 112, 131, 0.4);"] {
+    background-color: rgba(21, 32, 43, 0.85) !important; }
+
+/* Scrollbar */
+
+::-webkit-scrollbar {
+    width: 16px; }
+
+::-webkit-scrollbar-track {
+    background-color: #15202b; }
+
+::-webkit-scrollbar-thumb {
+    background-color: #38444d;
+    border: 4px solid #15202b;
+    border-radius: 8px; }
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #4e5d69; }
+
 }
